@@ -1,6 +1,25 @@
 <!-- Creación de la pantalla principal -->
 
+<?php
+require_once 'clases/Usuario.php';
+sesion_strart();
+if(isset($_SESSION['usuario'])){
+    $usuario = unserialize($_SESSION['usuario']);
+    $nomApe = $usuario->getNombreApellido();
+} else {
+    header('Location: index.php');
+}
+?>
 
-<!-- -->
-
-<!-- -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock de Productos</title>
+</head>
+<body>
+    
+</body>
+</html>
