@@ -8,10 +8,10 @@ class Usuario{
 	protected $apellido;
 	protected $email;
 
-	public function __construct ($usuario, $nombre, $apellido, $email, $id){
+	public function __construct ($nombre_usuario, $nombre, $apellido, $email, $id = null){
 
 		$this->id = $id;
-		$this->usuario = $usuario;
+		$this->nombre_usuario = $nombre_usuario;
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
 		$this->email = $email;
@@ -24,7 +24,7 @@ class Usuario{
     	$this->id = $id;
     }
     public function getUsuario() {
-    	return $this->usuario;
+    	return $this->nombre_usuario;
     }
     public function getNombre() {
     	return $this->nombre;
@@ -32,7 +32,7 @@ class Usuario{
     public function getApellido() {
     	return $this->apellido;
     }
-    public function email() {
+    public function getEmail() {
     	return $this->email;
     }
 }

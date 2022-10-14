@@ -25,21 +25,47 @@ class RepositorioUsuario{
 		}
 	}
 
-	public function login($usuario, $clave){
+	public function login($nombre_usuario, $clave){
 		var_dump(password_hash("1234", PASSWORD_DEFAULT));
 		$q = "SELECT id , clave, nombre, apellido, email FROM usuarios WHERE usuario = ?";
 		$query = self::$conexion->prepare($q);
-		$query->bind_param('s', $usuario);
+		$query->bind_param('s', $nombre_usuario);
 
 		if ($query->execute()){
 			$query->bind_result($id, $clave_encriptada, $nombre, $apellido, $email);
 			if ($query->fetch()) {
 				if (password_verify($clave, $clave_encriptada)){
-				return new Usuario($usuario, $nombre, $apellido, $email, $id);
+				return new Usuario($nombre_usuario, $nombre, $apellido, $email, $id);
 				}
 			}
 		}
 		return false;
+	}
+
+	public function save(Usuario $usuario, $clave){
+
+		$q = "INSERT INTO usuarios (usuario, clave, nombre, apellido, email)";
+		$q.= "VALUES (?, ?, ?, ?, ?)";
+		$query = self::$conexion->prepare($q);
+		$nombre_usuario = $usuario->getUsuario();
+		$clave_encriptada = password_hash($clave, PASSWORD_DEFAULT);
+		$nombre = $usuario->getNombre();
+		$apellido = $usuario->getApellido();
+		$email = $usuario->getEmail();	
+			$query->bind_param("sssss",
+			$nombre_usuario,
+			$clave_encriptada,
+			$nombre,
+			$apellido,
+			$email
+		);
+
+		if ($query->execute()){
+		return self::$conexion->insert_id;
+		} else{
+
+			return false;
+		}
 	}
 }
 
