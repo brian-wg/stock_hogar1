@@ -1,6 +1,7 @@
 <?php 
 require_once '.env.php';
 require_once 'Usuario.php';
+require_once 'Producto.php';
 
 class RepositorioUsuario{
 
@@ -67,6 +68,9 @@ class RepositorioUsuario{
 			return false;
 		}
 	}
+
+
+	
 }
 
  ?>

@@ -35,6 +35,9 @@ class Usuario{
     public function getEmail() {
     	return $this->email;
     }
+    public function getNombreApellido(){
+    	return $this->nombre." ".$this->apellido;
+    }
 }
 
 
