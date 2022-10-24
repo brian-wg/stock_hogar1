@@ -35,10 +35,11 @@ private static $conexion = null;
     * @return Array Un array compuesto por objetos de tipo Producto, con todos los prodductos
     *               del usuario.
     */
-    public function getProductos($id)
+    public function getProductos(Usuario $usuario)
     {
         $q = "SELECT id_producto, producto, marca, cantidad FROM productos WHERE usuario_fk = ?";
         $query = self::$conexion->prepare($q);
+        $id = $usuario->getId();
         $query->bind_param('d', $id);
 
         if ($query->execute()){
@@ -82,15 +83,26 @@ private static $conexion = null;
     }
 
 
+    public function getCantidadAnterior($id){
+        $q = "SELECT cantidad FROM productos WHERE id_producto = ?";
+        $query = self::$conexion->prepare($q);
 
+        $query->bind_param('d', $id);
+        $query->bind_result($cantidad);
+        if ($query->execute()){
+            if($query->fetch()){
+            return $cantidad;    
+            }
+        }
+            return false;
+    }
 
-    public function update($cantidad, $id_producto){
+    public function update($id_producto, $cantidad){
 
         $q = "UPDATE productos SET cantidad = ? WHERE id_producto = ?";
         $query = self::$conexion->prepare($q);
 
-
-        $query->bind_param('dd', $cantidad, $id);
+        $query->bind_param('dd', $cantidad, $id_producto);
 
         if ($query->execute()){
           return true;

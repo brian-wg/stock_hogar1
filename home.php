@@ -14,7 +14,7 @@ if (isset($_SESSION['usuario'])) {
 
     $id = $usuario->getId();
     $rp = new RepositorioProducto();
-    $productos = $rp->getProductos($id);
+    $productos = $rp->getProductos($usuario);
     $nomApe = $usuario->getNombreApellido();
     
     //almacenar con variable el total de conteos de productos llamados por un metodo de rp
@@ -68,9 +68,9 @@ if (isset($_SESSION['usuario'])) {
 
 foreach ($productos as $p) {
     echo '<tr><td>'.$p->getId().'</td><td>'.$p->getProducto().'</td><td>'.$p->getMarca().'</td><td>'.$p->getCantidad().'</td>';
-    echo '<td><a href="actualizar.php?id="'.$p->getId().'"';
+    echo '<td><a href="actualizar.php?id='.$p->getId().'"';
     echo 'class="btn btn-info">Editar</a></th>';
-    echo '<th><a href="delete.php?id="'.$p->getId().' class="btn btn-danger">Eliminar</a></th>';
+    echo '<th><a href="delete.php?id='.$p->getId().'" class="btn btn-danger">Eliminar</a></th>';
 }?>
 </tr>
 

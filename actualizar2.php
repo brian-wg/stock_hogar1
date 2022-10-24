@@ -13,17 +13,18 @@ if (isset($_SESSION['usuario'])) {
 }
 
 
-if (!empty($_POST['id_producto'])
+if (
+    !empty($_POST['id_producto'])
     && !empty($_POST['cantidad'])
 ) {
    $rp = new RepositorioProducto();
- }
     
     if ($rp->update($_POST['id_producto'], $_POST['cantidad'])) { 
-    $redirigir = 'home.php?mensaje='.$result[1];
+    $redirigir = 'home.php?mensaje=producto modificado correctamente';
 } else {
     $mensaje = "No fue posible modificar el producto.";
     $redirigir = "home.php?mensaje=$mensaje";
     
+}
 }
 header("Location: $redirigir");

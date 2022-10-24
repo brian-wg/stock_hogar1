@@ -41,8 +41,8 @@ if (isset($_SESSION['usuario'])) {
     <div class="col-md-3">
         <h3>Editar producto</h3>
         <form action="actualizar2.php" method="POST">
-    <input type="text" class="form-control mb-3" name="id_producto" placeholder="id producto">
-    <input type="text" class="form-control mb-3" name="cantidad" placeholder="nuevo valor cantidad">
+    <input type="text" class="form-control mb-3" name="id_producto" value="<?php echo $_GET['id']; ?>" readonly="">
+    <input type="number" class="form-control mb-3" name="cantidad" value="<?php echo $rp->getCantidadAnterior($_GET['id']); ?>">
     <button class="w-100 btn btn-lg btn-primary" type="submit">Editar</button>	
       
       </form>
