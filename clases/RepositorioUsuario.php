@@ -27,16 +27,18 @@ class RepositorioUsuario{
 	}
 
 	public function login($nombre_usuario, $clave){
-		var_dump(password_hash("1234", PASSWORD_DEFAULT));
-		$q = "SELECT id , clave, nombre, apellido, email FROM usuarios WHERE usuario = ?";
+		//var_dump(password_hash("1234", PASSWORD_BCRYPT));
+
+		$q = "SELECT * FROM usuarios WHERE usuario = ?";
 		$query = self::$conexion->prepare($q);
 		$query->bind_param('s', $nombre_usuario);
 
 		if ($query->execute()){
-			$query->bind_result($id, $clave_encriptada, $nombre, $apellido, $email);
+			$query->bind_result($id, $usuario, $clave_encriptada, $nombre, $apellido, $email);
 			if ($query->fetch()) {
 				if (password_verify($clave, $clave_encriptada)){
-				return new Usuario($nombre_usuario, $nombre, $apellido, $email, $id);
+
+					return new Usuario($usuario, $nombre, $apellido, $email, $id);
 				}
 			}
 		}

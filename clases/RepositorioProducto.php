@@ -1,5 +1,7 @@
 <?php 
 
+require_once 'Usuario.php';
+require_once '.env.php';
 
 class RepositorioProducto{
 
@@ -33,17 +35,17 @@ private static $conexion = null;
     * @return Array Un array compuesto por objetos de tipo Producto, con todos los prodductos
     *               del usuario.
     */
-    public function getProductos($id_usuario)
+    public function getProductos($id)
     {
-        $q = "SELECT id, producto, marca, cantidad FROM productos WHERE usuario = ?";
+        $q = "SELECT id_producto, producto, marca, cantidad FROM productos WHERE usuario_fk = ?";
         $query = self::$conexion->prepare($q);
-        $query->bind_param('d', $usuario);
+        $query->bind_param('d', $id);
 
         if ($query->execute()){
-            $query->bind_result($id, $producto, $marca, $cantidad);
+            $query->bind_result($id_producto, $producto, $marca, $cantidad);
             $lista_de_productos = [];
             while ($query->fetch()) {
-                $lista_de_productos[] = new Producto($producto, $marca, $cantidad, $id);                
+                $lista_de_productos[] = new Producto($producto, $marca, $cantidad, $id_producto);                
             }
             return $lista_de_productos;
         }
@@ -53,20 +55,23 @@ private static $conexion = null;
     }
 
 
- public function agregar(Producto $p){
+ public function agregar(Producto $p, $usuario){
     
         // Preparamos la query del update
-        $q = "INSERT INTO productos (producto, marca, cantidad) VALUES ?,?,?";        
+        $q = "INSERT INTO productos (producto, usuario_fk, marca, cantidad) VALUES (?, ?, ?,?)";        
         $query = self::$conexion->prepare($q);
 
         // Obtenemos los nuevos valores desde el objeto:
+        $usuario_id = $usuario->getId();
         $producto = $p->getProducto();
         $marca = $p->getMarca();    
         $cantidad = $p->getCantidad();
-        $id = $p->getId();
+        
 
         // Asignamos los valores para reemplazar los "?" en la query
-        $query->bind_param("ssd", $producto, $marca, $cantidad);
+        if(!$query->bind_param("sisi", $producto, $usuario_id, $marca, $cantidad)){
+            echo "fallo la consulta";
+        }
 
         // Retornamos true si la query tiene éxito, false si fracasa
         if ($query->execute()) {
@@ -78,46 +83,23 @@ private static $conexion = null;
 }
 
 
-    /*public function saveProducto(Usuario $usuario, $clave){
 
-        $q = "INSERT INTO productos (producto, marca, cantidad) WHERE usuario = ?";
-        $q.= "VALUES (?, ?, ?)";
+   /* public function actualizar(Usuario $p, $usuario){
+
+        $q = "UPDATE productos SET cantidad = ? WHERE usuario_fk = ?";
         $query = self::$conexion->prepare($q);
-        $nombre_usuario = $usuario->getUsuario();
-        $producto = $producto->getProducto();
-        $marca = $marca->getMarca();
-        $cantidad = $cantidad->getCantidad();   
-            $query->bind_param("sssd",
-            $nombre_usuario,
-            $producto,
-            $marca,
-            $cantidad,
-        );
+
+        $usuario_id = $usuario->getId();
+        $cantidad = $p->getCantidad();
+
+        $query->bind_param('ii', $cantidad, $id);
 
         if ($query->execute()){
         Header("Location: Home.php");
         } 
-    }
-
-    public function updateProducto(Usuario $usuario, $clave){
-
-        $q = "UPDATE productos SET (producto, marca, cantidad) WHERE usuario = ?";
-        $q.= "VALUES (?, ?, ?, ?)";
-        $query = self::$conexion->prepare($q);
-        $nombre_usuario = $usuario->getUsuario();
-        $producto = $producto->getProducto();
-        $marca = $marca->getMarca();
-        $cantidad = $cantidad->getCantidad();   
-            $query->bind_param("sssd",
-            $nombre_usuario,
-            $producto,
-            $marca,
-            $cantidad,
-        );
-
-        if ($query->execute()){
-        Header("Location: Home.php");
-        } 
+        else {
+            return false;
+        }
     }*/
 
 ?>

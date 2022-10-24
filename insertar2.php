@@ -1,7 +1,8 @@
 <?php
+session_start();
 require_once 'clases/RepositorioProducto.php';
-require_once '.env.php';
 require_once 'clases/Producto.php';
+
 
 $rp = new RepositorioProducto();
 
@@ -11,10 +12,9 @@ $cantidad = $_POST['cantidad'];
 
 
 $p = new Producto($producto,$marca, $cantidad);
+$usuario = unserialize($_SESSION['usuario']);
 
-$agregar = $rp->agregar($p);
-
-if($agregar) {
+if($rp->agregar($p, $usuario)) {
     $redirigir = 'home.php?mensaje=Producto agregado';
 } else {
 	$redirigir = 'home.php?mensaje=Error al agregar';

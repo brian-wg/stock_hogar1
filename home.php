@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 require_once 'clases/Usuario.php';
 require_once 'clases/ControladorSesion.php';
 require_once 'clases/Producto.php';
@@ -7,7 +7,7 @@ require_once 'clases/RepositorioUsuario.php';
 require_once 'clases/RepositorioProducto.php';
 
 
-session_start();
+
 if (isset($_SESSION['usuario'])) {
     
     $usuario = unserialize($_SESSION['usuario']);
@@ -16,7 +16,8 @@ if (isset($_SESSION['usuario'])) {
     $rp = new RepositorioProducto();
     $productos = $rp->getProductos($id);
     
-
+    //almacenar con variable el total de conteos de productos llamados por un metodo de rp
+    //$productos_totales = $rp->totalProductosUsuario($id)
 
 } else {
     
@@ -55,6 +56,10 @@ if (isset($_SESSION['usuario'])) {
 
     <tbody>
 <?php
+
+// imprimo el total de los productos contados anteriormente almacenados
+// echo "<h3>Total de productos de '".$usuario->getNomAp()."': ".$productos_totales."</h3>";
+
 foreach ($productos as $p) {
     echo '<tr><td>'.$p->getId().'</td><td>'.$p->getProducto().'</td><td>'.$p->getMarca().'</td><td>'.$p->getCantidad().'</td>';
     echo '<td><a href="actualizar.php?id="'.$p->getId().'"';
@@ -68,6 +73,6 @@ foreach ($productos as $p) {
         </div>
         </div>  
         </div>
-        <a href="insertar.php?id=">Agregar producto</a>
+        <a  href="insertar.php?id=" class="w-10 btn btn-lg btn-primary">Agregar producto</a>
     </body>
 </html>
