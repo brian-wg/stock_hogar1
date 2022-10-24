@@ -1,16 +1,16 @@
 <?php
 include_once "Producto.php";
-include_once "RepositorioUsuario.php";
+include_once "RepositorioProducto.php";
 
-$repo = new RepositorioUsuario();
+$repo = new RepositorioProducto();
 
-$usuario = $repo->login("b2", "1234");
+$prod = $repo->update("7", "12");
 
-if($usuario){
-	echo $usuario->getId();
+if($prod){
+	echo "bien";
 }
 else{
-	echo $usuario;	
+	echo "mal";
 }
 
 ?>

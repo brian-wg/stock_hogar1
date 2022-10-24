@@ -80,26 +80,25 @@ private static $conexion = null;
             return false;
         }
     }
-}
 
 
 
-   /* public function actualizar(Usuario $p, $usuario){
 
-        $q = "UPDATE productos SET cantidad = ? WHERE usuario_fk = ?";
+    public function update($cantidad, $id_producto){
+
+        $q = "UPDATE productos SET cantidad = ? WHERE id_producto = ?";
         $query = self::$conexion->prepare($q);
 
-        $usuario_id = $usuario->getId();
-        $cantidad = $p->getCantidad();
 
-        $query->bind_param('ii', $cantidad, $id);
+        $query->bind_param('dd', $cantidad, $id);
 
         if ($query->execute()){
-        Header("Location: Home.php");
-        } 
+          return true;
+        }
         else {
             return false;
         }
-    }*/
+    
 
-?>
+  }
+}

@@ -1,6 +1,8 @@
 <?php 
 require_once 'RepositorioUsuario.php';
+require_once 'RepositorioProducto.php';
 require_once 'Usuario.php';
+require_once 'Producto.php';
 
 class ControladorSesion{
 
@@ -37,14 +39,14 @@ class ControladorSesion{
 		}
 	}
 
-	 public function modificar($nombre_usuario, $nombre, $apellido, $email, Usuario $usuario)
+	public function modificar($cantidad, Producto $producto)
     {
-        $repo = new RepositorioUsuario();
-        // Actualizamos los datos del usuario con el método setDatos de la clase Usuario:
-        $usuario->setDatos($nombre_usuario, $nombre, $apellido, $email);
+        $repo = new RepositorioProducto();
+        // Actualizamos los datos del producto con el método setDatos de la clase Producto:
+        $producto->setDatos($cantidad);
 
         // Actualizadmos los valores en la BD, con el método actualizar del repositorio:
-        if ($repo->actualizar($usuario)) {
+        if ($repo->update($cantidad, $producto)) {
             // Si se actualizó correctamente, actualizamos la variable de sesión
             session_start();
             $_SESSION['usuario'] = serialize($usuario);

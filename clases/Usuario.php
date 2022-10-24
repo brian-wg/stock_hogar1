@@ -39,9 +39,7 @@ class Usuario{
     	return $this->nombre." ".$this->apellido;
     }
 
-    public function __toString(){
-        return "Obj usuario";
-    }
+   
 }
 
 

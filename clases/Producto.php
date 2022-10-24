@@ -30,11 +30,10 @@ class Producto{
     }
 
 
-     public function setDatos($nombre_usuario, $producto, $marca, $cantidad)
+
+     public function setDatos($cantidad)
     {
-        $this->usuario = $nombre_usuario;
-        $this->producto = $producto;
-        $this->marca = $marca;
+
         $this->cantidad = $cantidad;
     }
     

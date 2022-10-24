@@ -22,9 +22,6 @@ if (
     $cs = new ControladorSesion();
 
     $result = $cs->modificar(
-       
-        $_POST['producto'],
-        $_POST['marca'],
         $_POST['cantidad'],
         $usuario
     );

@@ -43,7 +43,7 @@ if (isset($_SESSION['usuario'])) {
         <form action="insertar2.php" method="POST">
     <input type="text" class="form-control mb-3" name="producto" placeholder="producto">
     <input type="text" class="form-control mb-3" name="marca" placeholder="marca">
-    <input type="text" class="form-control mb-3" name="cantidad" placeholder="cantidad">
+    <input type="number" class="form-control mb-3" name="cantidad" placeholder="cantidad">
     <button class="w-100 btn btn-lg btn-primary" type="submit">Agregar</button>	
       </form>
         </div>
