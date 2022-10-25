@@ -111,6 +111,20 @@ private static $conexion = null;
             return false;
         }
     
+    }
 
-  }
+    public function delete($id_producto){
+        $q = "DELETE FROM productos WHERE id_producto = ?";
+        $query = self::$conexion->prepare($q);
+
+         $query->bind_param('d', $id_producto);
+         if ($query->execute()){
+          return true;
+        }
+        else {
+            return false;
+        }
+         
+    }
+
 }
